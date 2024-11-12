@@ -4259,6 +4259,11 @@ Begin:
 		sleep(0.0);
 	}
 
+	// Start Issue #1406
+	/// HL-Docs: ref:PostMissionIntroKismet
+	`XEVENTMGR.TriggerEvent('PostMissionIntroKismet',,,);
+	// End Issue #1406
+
 	// kick off the gameplay start kismet, do not wait for it to complete latent actions
 	WorldInfo.TriggerGlobalEventClass(class'SeqEvent_OnTacticalMissionStartNonBlocking', WorldInfo);
 
