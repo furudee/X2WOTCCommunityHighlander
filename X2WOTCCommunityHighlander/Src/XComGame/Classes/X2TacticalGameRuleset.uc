@@ -3887,11 +3887,14 @@ Begin:
 	// kick off the mission intro kismet, and wait for it to complete all latent actions
 	WorldInfo.TriggerGlobalEventClass(class'SeqEvent_OnTacticalMissionStartBlocking', WorldInfo);
 
-
 	while (WaitingForVisualizer())
 	{
 		sleep(0.0);
 	}
+
+	// Start Issue #1406
+	`XEVENTMGR.TriggerEvent('PostMissionIntroKismet',,,);
+	// End Issue #1406
 
 	// set up start of match special conditions, including squad concealment
 	ApplyStartOfMatchConditions();
