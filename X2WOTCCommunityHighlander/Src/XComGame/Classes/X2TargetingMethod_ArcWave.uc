@@ -116,6 +116,7 @@ function bool GetAdditionalTargets(out AvailableTarget AdditionalTargets)
 	local name AvailableCode;
 	local XComGameStateHistory History;
 	local XComGameState_BaseObject StateObject;
+	local array<StateObjectReference> ValidationTargets;
 
 	TargetedActor = GetTargetedActor();
 	TargetedPawn = XGUnit(TargetedActor);
@@ -137,21 +138,46 @@ function bool GetAdditionalTargets(out AvailableTarget AdditionalTargets)
 			for (i = 0; i < CurrentlyMarkedTargets.Length; ++i)
 			{
 				CurrentTargetUnit = XGUnit(CurrentlyMarkedTargets[i]);
+
 				if (CurrentTargetUnit != none)
 				{
 					StateObject = History.GetGameStateForObjectID(CurrentTargetUnit.ObjectID);
 					AvailableCode = ArcWaveTemplate.CheckMultiTargetConditions(Ability, UnitState, StateObject);	
+
 					if (AvailableCode == 'AA_Success' && StateObject.ObjectID != AdditionalTargets.PrimaryTarget.ObjectID)
 					{
 						if (AdditionalTargets.AdditionalTargets.Find('ObjectID', StateObject.ObjectID) == INDEX_NONE)
+						{
 							AdditionalTargets.AdditionalTargets.AddItem(StateObject.GetReference());
+						}
+
+						ValidationTargets.AddItem(StateObject.GetReference());
 					}
 				}
 			}
+			// Start Issue #1408
+			/// HL-Docs ref:Bugfixes; issue:1408
+			/// Validates targets that were given as function parameter
+			for (i = AdditionalTargets.AdditionalTargets.Length - 1; i >= 0; --i)
+			{
+				// not a target that the ability actually hits
+				if( ValidationTargets.Find('ObjectID', AdditionalTargets.AdditionalTargets[i].ObjectID) == INDEX_NONE )
+				{
+					AdditionalTargets.AdditionalTargets.Remove(i, 1);
+				}
+			}
+			// End Issue #1408
 
 			return true;
 		}
 	}
+
+	// Start Issue #1408
+	/// HL-Docs ref:Bugfixes; issue:1408
+	/// Empty the AdditionalTargets array if the ability didn't hit any other tiles than primary target
+	/// or ability has no target
+	AdditionalTargets.AdditionalTargets.Length = 0;
+	// End Issue #1408
 
 	return false;
 }
