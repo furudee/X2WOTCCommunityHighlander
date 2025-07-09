@@ -162,7 +162,7 @@ var() bool							bHasSeenCovertActionRiskIntroPopup;
 var() bool							bHasReceivedResistanceOrderPopup;
 var() bool							bHasSeenCantChangeOrdersPopup;
 var() bool							bHasSeenSoldierBondPopup;
-var() bool							bHasSeenNegativeTraitPopup;
+var() bool							bHasSeenNegativeTraitPopup; // Issue #1081 - Note: this bool now also covers popups for positive traits.
 
 // Tactical Tutorial Flags
 var() bool							bHasSeenTacticalTutorialSoldierBonds;
@@ -4101,6 +4101,10 @@ function bool HasItemInInventoryOrLoadout(X2ItemTemplate ItemTemplate, optional 
 function bool HasUnModifiedItem(XComGameState AddToGameState, X2ItemTemplate ItemTemplate, out XComGameState_Item ItemState, optional bool bLoot = false, optional XComGameState_Item CombatSimTest)
 {
 	local int idx;
+	// Start Issue #1352 - New variables for combat sim stacking behavior
+	local int StatBoostidx;
+	local bool bhasIdenticalStatBoosts;
+	// End Issue #1352
 
 	if(bLoot)
 	{
@@ -4149,10 +4153,27 @@ function bool HasUnModifiedItem(XComGameState AddToGameState, X2ItemTemplate Ite
 				{
 					if(ItemState.GetMyTemplate().ItemCat == 'combatsim')
 					{
-						if(ItemState.StatBoosts.Length > 0 && CombatSimTest.StatBoosts.Length > 0 && ItemState.StatBoosts[0].Boost == CombatSimTest.StatBoosts[0].Boost && ItemState.StatBoosts[0].StatType == CombatSimTest.StatBoosts[0].StatType)
+						// Begin Issue #1352
+						/// HL-Docs: ref:Bugfixes; issue:1352
+						/// Fixes a bug that caused PCS items which did not have exactly one stat boost, to not stack properly in the UI 
+						/// by making HasUnModifiedItem() properly compare items with multiple stat boosts or no stat boosts at all.							
+						bhasIdenticalStatBoosts = true;
+						if (CombatSimTest.StatBoosts.Length != 0)
+						{
+							for (StatBoostidx = 0; StatBoostidx < ItemState.StatBoosts.Length; StatBoostidx++)
+							{
+								if (ItemState.StatBoosts[StatBoostidx].Boost != CombatSimTest.StatBoosts[StatBoostidx].Boost || ItemState.StatBoosts[StatBoostidx].StatType != CombatSimTest.StatBoosts[StatBoostidx].StatType)
+								{
+									bhasIdenticalStatBoosts = false;
+									break;
+								}
+							}
+						}
+						if (bhasIdenticalStatBoosts)
 						{
 							return true;
 						}
+						// End Issue #1352
 					}
 					else
 					{
@@ -4201,6 +4222,7 @@ function bool PutItemInInventory(XComGameState AddToGameState, XComGameState_Ite
 				{
 					NewInventoryItemState = XComGameState_Item(AddToGameState.ModifyStateObject(class'XComGameState_Item', InventoryItemState.ObjectID));
 					NewInventoryItemState.Quantity += ItemState.Quantity;
+					AddToGameState.RemoveStateObject(ItemState.ObjectID); // Issue #1465 - delete item to prevent save bloat
 				}
 			}
 			else
@@ -7500,13 +7522,13 @@ function GeneratedMissionData GetGeneratedMissionData(int MissionID)
 			GeneratedMission.BattleOpName = class'XGMission'.static.GenerateOpName(false);
 		}
 		
-		/// HL-Docs: ref:Bugfixes; issue:1188
-		/// Add a none-check for `MissionState` before adding the generated mission entry to the array
-		/// to avoid bloating it with empty entries.
-		if (MissionState != none)
-		{
-			arrGeneratedMissionData.AddItem(GeneratedMission);
-		}
+		/// HL-Docs: ref:Bugfixes; issue:1466
+		/// Do not cache mission data in GetGeneratedMissionData().
+		/// Doing so bloats the save file and causes problems for mods like LWOTC and CI,
+		/// which need hacks to clear stale data from the cache.
+		/// The cache is still used temporarily during the post-mission sequence,
+		/// because the XCGS_MissionSite is deleted too early.
+		//arrGeneratedMissionData.AddItem(GeneratedMission);
 	}
 	else
 	{

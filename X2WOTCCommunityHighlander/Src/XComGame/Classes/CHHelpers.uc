@@ -207,6 +207,9 @@ var config float CameraRotationAngle;
 // Variable for Issue #917
 var config bool bDisableBetaStrikePostMissionHealing;
 
+// Variable for Issue #1081
+var config bool bShowAllTraitAcquiredPopups;
+
 // Start Issue #669
 //
 /// HL-Docs: feature:GrenadesRequiringUnitsOnTargetedTiles; issue:669; tags:tactical
@@ -257,6 +260,19 @@ var config bool bUseMinDamageForUnitFlagPreview;
 // Variable for Issue #1228 - disables Aim Assist.
 var config bool bDisableAimAssist;
 
+// Variables for Issue #1400 - forces 24h clock regardless of locale
+var config bool bForce24hClock;
+var config bool bForce24hclockLeadingZero;
+
+// Variable for Issue #1398 - Number of seconds to wait after a unit is killed before playing the 'OnSquadMemberDead' voiceline
+var config float fSquadMemberDeadVoicelineDelay;
+
+// Start Issue #1453 - Variables to disable automatic photobooth photos
+var config bool bDisableAutomaticMissionPhoto;
+var config bool bDisableAutomaticMemorialPhoto;
+var config bool bDisableAutomaticPromotionPhoto;
+var config bool bDisableAutomaticBondPhoto;
+// End Issue #1453
 
 // Start Issue #885
 enum EHLDelegateReturn
@@ -1124,3 +1140,19 @@ static final function array<SoldierClassAbilityType> RebuildSoldierClassAbilityT
 	return AbilityTypes;
 }
 // End Issue #815
+
+/// HL-Docs: ref:Bugfixes; issue:1417
+/// This helper function uses a more robust check to ensure the geoscape is ready for alerts.
+/// This replaces functions that only check for the presence of a UIAlert screen, which can
+/// result in popups in places such as Squad Select or the Black Market screen if the campaign date lines up with flight time.
+static function bool GeoscapeReadyForUpdate()
+{
+	local UIStrategyMap StrategyMap;
+
+	StrategyMap = `HQPRES.StrategyMap2D;
+
+	return
+		StrategyMap != none &&
+		StrategyMap.m_eUIState != eSMS_Flight &&
+		StrategyMap.Movie.Pres.ScreenStack.GetCurrentScreen() == StrategyMap;
+}

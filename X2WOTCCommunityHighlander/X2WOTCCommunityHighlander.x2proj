@@ -514,13 +514,22 @@
     <Content Include="Src\XComGame\Classes\X2Ability_ChosenSniper.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2Ability_ChosenWarlock.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2Ability_ChryssalidCocoon.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2Ability_Chosen.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2Ability_Cyberus.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2Ability_DefaultBondmateAbilities.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\X2Ability_PsiWitch.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2Ability_RangerAbilitySet.uc">
@@ -556,6 +565,9 @@
     <Content Include="Src\XComGame\Classes\X2Action_Fire.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2Action_Knockback.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2Action_PlaySoundAndFlyOver.uc">
       <SubType>Content</SubType>
     </Content>
@@ -586,6 +598,15 @@
     <Content Include="Src\XComGame\Classes\X2ChosenActionTemplate.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2Condition_Restoration.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\X2Condition_RevivalProtocol.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\X2Condition_RevivalProtocolRestoreAP.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2Condition_StasisLanceTarget.uc">
       <SubType>Content</SubType>
     </Content>
@@ -613,6 +634,9 @@
     <Content Include="Src\XComGame\Classes\X2Effect_ApplyWeaponDamage.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2Effect_Blind.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2Effect_BonusWeaponDamage.uc">
       <SubType>Content</SubType>
     </Content>
@@ -620,6 +644,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2Effect_HomingMineDamage.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\X2Effect_Knockback.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2Effect_LaserSight.uc">
@@ -638,6 +665,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2Effect_Persistent.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\X2HackReward.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\X2HackRewardTemplateManager.uc">
@@ -733,6 +763,9 @@
     <Content Include="Src\XComGame\Classes\X2TacticalGameRulesetDataStructures.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\X2TargetingMethod_ArcWave.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\X2TargetingMethod_EvacZone.uc">
       <SubType>Content</SubType>
     </Content>
@@ -802,6 +835,9 @@
     <Content Include="Src\XComGame\Classes\XComGameState_AIUnitData.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\XComGameState_AlienNetworkComponent.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_BlackMarket.uc">
       <SubType>Content</SubType>
     </Content>
@@ -815,6 +851,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_EvacZone.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\XComGameState_Haven.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_HeadquartersAlien.uc">
@@ -850,13 +889,22 @@
     <Content Include="Src\XComGame\Classes\XComGameState_LadderProgress.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\XComGame\Classes\XComGameState_MissionCalendar.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_MissionSite.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\XComGameState_PointOfInterest.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_RegionLink.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_ResistanceFaction.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\XComGame\Classes\XComGameState_ResourceCache.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\XComGame\Classes\XComGameState_StaffSlot.uc">
