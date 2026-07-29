@@ -287,6 +287,9 @@ var config bool bDisableAutomaticBondPhoto;
 var config bool bManualPhotoTakenOnLastMission;
 // End Issue #1453
 
+// Variable for Issue #1594 - Allow unit switching/pathing/ability activation when civilians are visualizing their movement
+var config bool bDisableCivilianMovementBlockingVisualization;
+
 // Start Issue #885
 enum EHLDelegateReturn
 {

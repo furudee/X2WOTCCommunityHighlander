@@ -96,6 +96,17 @@ event bool BlocksAbilityActivation()
 		}
 
 		UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(AbilityContext.InputContext.SourceObject.ObjectID));
+
+		// Start Issue #1594
+		/// HL-Docs: feature:DisableBlockingCivilianMovement; issue:1594; tags:tactical
+		/// XCOM movement doesn't block ability activation and unit switching which lets you move multiple units while others are visualizing
+		/// Extend this QoL feature to civilians so their movement doesn't require the player to wait visualization to finish
+		if(class'CHHelpers'.default.bDisableCivilianMovementBlockingVisualization && UnitState.GetTeam() == eTeam_Neutral)
+		{
+			return false;
+		}
+		// End Issue #1594
+
 		if(UnitState.GetTeam() != eTeam_XCom)
 		{
 			return true; // if the aliens are moving around, then we need to wait for them to finish
